@@ -1,0 +1,45 @@
+version: '3.6'
+
+networks:
+  backend:
+    driver: bridge
+
+services:
+
+  apache:
+    build:
+      context: ./apache
+    environment:
+      - PUBLIC_PATH=${PUBLIC_PATH}
+    user: '${OWNER_USER_ID}:${OWNER_GROUP_ID}'
+    volumes:
+      - ${ROOT_PATH}:/var/www/html
+      - ./apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./apache/vhosts.conf:/usr/local/apache2/conf/extra/vhosts.conf
+      - ./apache/storage:/usr/local/apache2/logs
+    ports:
+      - '${HTTP_PORT}:80'
+    networks:
+      - backend
+
+  php:
+    build:
+      context: ./php
+      args:
+        OWNER_USER_ID: ${OWNER_USER_ID:?err}
+        OWNER_GROUP_ID: ${OWNER_GROUP_ID:?err}
+    environment:
+      - XDEBUG_CONFIG=client_host=${DOCKER_GATEWAY_HOST:-host.docker.internal}
+      - PHP_IDE_CONFIG=serverName=${COMPOSE_PROJECT_NAME}.localhost
+    user: '${OWNER_USER_ID}:${OWNER_GROUP_ID}'
+    volumes:
+      - ${ROOT_PATH}:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./php/aliases.sh:/etc/profile.d/aliases.sh
+      - ~/.ssh:/var/www/.ssh
+      - ~/.composer:/var/www/.composer
+      - ~/.symfony:/var/www/.symfony
+      - ~/.gitconfig:/var/www/.gitconfig
+      - ~/.ash_history:/var/www/.ash_history
+    networks:
+      - backend

@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Case A",
+        "expression": "!customer_is_new(cart) && count_unique_products(cart) > 4",
+        "discount": {
+            "type": "flat",
+            "value": "5",
+            "expression": "is_cart(object)"
+        }
+    },
+    {
+        "name": "Case B",
+        "expression": "cart_has_duplicate_products(cart)",
+        "discount": {
+            "type": "percentage",
+            "value": "100",
+            "expression": "is_product(object) && product_count(object) > 1 && same_product_max_count(object, 1)"
+        }
+    },
+    {
+        "name": "Case C",
+        "expression": "customer_is_new(cart)",
+        "discount": {
+            "type": "percentage",
+            "value": "100",
+            "expression": "is_product(object) && object.isSpecial()"
+        }
+    },
+    {
+        "name": "Case D",
+        "expression": "promo_code(cart) === \"Welcome1337\"",
+        "discount": {
+            "type": "percentage",
+            "value": "100",
+            "expression": "is_cart(object)"
+        }
+    },
+    {
+        "name": "Case E",
+        "expression": "cart_contains_product_id(cart, \"e34328ef-922c-4a88-b005-25cdc5004e20\") && cart_contains_product_id(cart, \"024f090e-f403-4112-a0fc-0942911e2b65\")",
+        "discount": {
+            "type": "percentage",
+            "value": "100",
+            "expression": "is_product(object) && product_id(object) === \"e34328ef-922c-4a88-b005-25cdc5004e20\""
+        }
+    }
+]

@@ -1,0 +1,13 @@
+/.idea
+
+/.server/apache/storage
+/.server/docker-compose.override.yml
+
+!/.server/apache/storage/.gitignore
+
+/.server/mysql/storage
+!/.server/mysql/storage/.gitignore
+
+/vendor/
+/.code-coverage
+.phpunit.result.cache
