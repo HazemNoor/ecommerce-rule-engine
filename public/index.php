@@ -236,17 +236,17 @@ $url = '//'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
                 </div>
             </div>
             <div class="row">
-                <div class="col">
-                    <table class="table table-striped">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <?php if ($cart->getPromoCode() !== null): ?>
-                                        Applied promo is <b> <?= $cart->getPromoCode(); ?></b>
-                                    <?php else: ?>
-                                        No Promo code applied
-                                    <?php endif; ?>
-                                </td>
+                    <div class="col">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <?php if ($cart->getPromoCode() !== null): ?>
+                                            Applied promo is <b> <?= htmlspecialchars($cart->getPromoCode()); ?></b>
+                                        <?php else: ?>
+                                            No Promo code applied
+                                        <?php endif; ?>
+                                    </td>
                                 <td>
                                     <form action="<?= $url; ?>" method="post">
                                         <input type="text" name="promo" class="form-control" >
